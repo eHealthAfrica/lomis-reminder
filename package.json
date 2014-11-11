@@ -1,0 +1,54 @@
+{
+  "name": "lomis-reminder",
+  "version": "0.0.1",
+  "description": "A Cron Job script that runs at interval and send SMS alerts to designated recipients to remind them of events/actions that are due (stock count, etc).",
+  "keywords": [
+    "Cronjob",
+    "reminder",
+    "lomis",
+    "sms"
+  ],
+  "author": "eHealth Africa",
+  "contributors": [],
+  "license": "ISC",
+  "homepage": "https://github.com/eHealthAfrica/lomis-reminder",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eHealthAfrica/lomis-reminder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eHealthAfrica/lomis-reminder/issues"
+  },
+  "main": "index.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+    "index.js",
+    "lib",
+    "bin"
+  ],
+  "scripts": {
+    "prepublish": "grunt build",
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-mocha-test": "~0.8.1",
+    "mocha-multi": "~0.3.0",
+    "mocha-slow-reporter": "0.0.0",
+    "chai": "~1.8.1",
+    "rimraf": "~2.2.5",
+    "mocha-unfunk-reporter": "~0.4.0",
+    "istanbul": "~0.2.3"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "log4js": "~0.6.16",
+    "konfig": "0.2.0",
+    "q": "~1.0.1",
+    "request": "~2.47.0",
+    "pouchdb": "~3.0.2"
+  }
+}
