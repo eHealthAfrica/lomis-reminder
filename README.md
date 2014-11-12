@@ -10,7 +10,7 @@ This script requires a configuration file, app.json place at:
 
 with following:
 
-{
+`{
   "default": {
     "DB_URL": "",
     "STOCK_COUNT_DB": "",
@@ -19,7 +19,7 @@ with following:
     "PHONE_ID": "",
     "API_KEY": ""
   }
-}
+}`
 
 
 ## Usage
