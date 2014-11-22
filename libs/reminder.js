@@ -116,7 +116,7 @@ var reminder = {
   },
   getByKey: function(key){
     var db = new pouchdb(REMINDER_DB_URL);
-    return db.query('reminder/by_facility_count_date_sent_on', { key: key});
+    return db.query('reminder/by_facility_reminder_date', { key: key});
   }
 };
 

@@ -27,7 +27,8 @@ function sendPendingReminders() {
                   var doc = {
                     info: row,
                     type: 'stock_count',
-                    sentOn: datePart
+                    reminderDate: datePart,
+                    sentOn: new Date().toJSON()
                   };
                   reminder.save(doc);
                 })
@@ -50,6 +51,7 @@ function sendPendingReminders() {
 }
 
 function main() {
+  logger.info('SMS Reminder started, waiting for '+DAILY_INTERVAL+' ms to elapsed before first run.');
   setInterval(sendPendingReminders, DAILY_INTERVAL);
 }
 
