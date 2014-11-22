@@ -1,13 +1,12 @@
 'use strict';
 
-var request = require('request');
 var config = require('konfig')();
-var q = require('q');
 var utility = require('../libs/utility.js');
 var pouchdb = require('pouchdb');
 var DB_URL = config.app.DB_URL;
 var STOCK_COUNT_DB = config.app.STOCK_COUNT_DB;
 var APP_CONFIG_DB = config.app.APP_CONFIG_DB;
+var REMINDER_DB_URL = DB_URL + config.app.REMINDER_DB;
 var DAILY = 1;
 var WEEKLY = 7;
 var BI_WEEKLY = 14;
@@ -96,7 +95,6 @@ var reminder = {
     var scUrl = DB_URL + STOCK_COUNT_DB;
     var scDB = pouchdb(scUrl);
     var scView = 'stockcount/by_countdate_and_facility';
-
     return appConfigDB.query(appConfigView)
       .then(function(res){
         var facilities = addNextDueDate(res);
@@ -105,13 +103,20 @@ var reminder = {
         return scDB.query(scView, { startkey: startDate.toJSON() })
           .then(function(res){
             var latestEventDates = getLatestEvents(res);
-            console.log(latestEventDates);
             return getFacilitiesPending(facilities, latestEventDates);
           });
       });
   },
   getReminderMsg: function(){
-    return 'Stock count is due, please count your stock.';
+    return 'Stock Count is due. Please, use LoMIS to send in your stock count!';
+  },
+  save: function(reminder){
+    var db = new pouchdb(REMINDER_DB_URL);
+    return db.post(reminder);
+  },
+  getByKey: function(key){
+    var db = new pouchdb(REMINDER_DB_URL);
+    return db.query('reminder/by_facility_count_date_sent_on', { key: key});
   }
 };
 
