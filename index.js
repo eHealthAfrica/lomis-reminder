@@ -3,7 +3,6 @@
 var reminder = require('./libs/reminder.js');
 var smsClient = require('./libs/sms-client.js');
 var logger = require('./libs/logger.js');
-console.log(logger);
 
 var DAILY_INTERVAL = 86400000;//24 hours in milliseconds
 var reminderMsg = reminder.getReminderMsg();
