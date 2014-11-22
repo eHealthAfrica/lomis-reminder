@@ -111,7 +111,7 @@ var reminder = {
       });
   },
   getReminderMsg: function(){
-    return 'Stock count is due, please count your stock.';
+    return 'Stock Count is due. Please, use LoMIS to send in your stock count!';
   }
 };
 
