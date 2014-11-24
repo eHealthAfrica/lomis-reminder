@@ -16,7 +16,7 @@ function sendPendingReminders() {
           return;
         }
         var today = new Date();
-        var datePart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toJSON();
+        var datePart = [today.getFullYear(), today.getMonth(), today.getDate()].join('-');
         var key = row.facilityId + datePart;
         reminder.getByKey(key)
           .then(function (res) {
@@ -27,7 +27,7 @@ function sendPendingReminders() {
                   var doc = {
                     info: row,
                     type: 'stock_count',
-                    sentOn: datePart
+                    sentOn: new Date().toJSON()
                   };
                   reminder.save(doc);
                 })
@@ -50,6 +50,7 @@ function sendPendingReminders() {
 }
 
 function main() {
+  logger.info('SMS Reminder started, waiting for '+DAILY_INTERVAL+' ms to elapsed before first run.');
   setInterval(sendPendingReminders, DAILY_INTERVAL);
 }
 

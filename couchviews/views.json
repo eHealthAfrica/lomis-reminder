@@ -1,0 +1,42 @@
+{
+  "_id": "_design/reminder",
+  "_rev": "4-9a8411942d7d7b5ca8544b9dc833992a",
+  "language": "javascript",
+  "views": {
+    "by_facility_sent_on": {
+      "map": "function(doc) {\n  var td = new Date(doc.sentOn);\n  var d = td.getFullYear() + '-' + td.getMonth() + '-' + td.getDate();\n  var key = doc.info.facilityId + d;\n  emit(key, doc);\n}"
+    }
+  }
+}
+
+{
+  "_id": "_design/app_config",
+  "_rev": "1-b9faef85f50fabca7fc8ed85cb67d330",
+  "language": "javascript",
+  "views": {
+    "template": {
+      "map": "function(doc) {\n  emit(doc.uuid, {facility: doc.facility});\n}"
+    },
+    "by_facility": {
+      "map": "function(doc) {\n   if(doc._id && doc.facility){\n      var key = doc.facility.uuid || doc.facility._id;\n      var value = {\n        appConfigId: doc._id,\n        facilityId: key,\n        reminderDay: doc.facility.reminderDay,\n        stockCountInterval: doc.facility.stockCountInterval,\n        phoneNo: doc.facility.phone\n      }\n      emit(key, value);\n   }\n}"
+    }
+  }
+}
+
+{
+  "_id": "_design/stockcount",
+  "_rev": "9-e5682c32ca3c93adf0b9c24e8bab5cbb",
+  "language": "javascript",
+  "views": {
+    "unopened": {
+      "map": "function (doc) {\n    if (doc.created && doc.unopened) {\n      var date = new Date(doc.created);\n      if (!isNaN(date.getMilliseconds())) {\n        // no timezone information, convert to UTC\n        if (doc.created.indexOf('Z') < 0)\n          date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds()));\n\n        // remove time information\n        date.setUTCHours(0);\n        date.setUTCMinutes(0);\n        date.setUTCSeconds(0);\n        date.setUTCMilliseconds(0);\n\n        Object.keys(doc.unopened).forEach(function (product) {\n          var count = parseInt(doc.unopened[product]);\n          if (!isNaN(count) && count < 100000)\n            emit([doc.facility, date, product], count);\n        });\n      }\n    }\n  }",
+      "reduce": "function (keys, values) {\n    return sum(values);\n  }"
+    },
+    "by_date": {
+      "map": "function(doc) {\n  emit(doc.created, doc);\n}"
+    },
+    "by_countdate_and_facility": {
+      "map": "function(doc) {\n  if(doc.countDate && doc.facility){\n    emit(doc.countDate, { \n\tfacility: doc.facility,\n        countDate: doc.countDate\n    });\n  }\n}"
+    }
+  }
+}
