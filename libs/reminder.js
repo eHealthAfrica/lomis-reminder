@@ -108,7 +108,7 @@ var reminder = {
       });
   },
   getReminderMsg: function(){
-    return 'Stock Count is due. Please, use LoMIS to send in your stock count!';
+    return 'Stock Count is due. Please, use LoMIS to send in your stock count! Ignore if you have done that already.';
   },
   save: function(reminder){
     var db = new pouchdb(REMINDER_DB_URL);
