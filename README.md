@@ -10,16 +10,17 @@ This script requires a configuration file, app.json place at:
 
 with following:
 
-`{
-  "default": {
-    "DB_URL": "",
-    "STOCK_COUNT_DB": "",
-    "APP_CONFIG_DB": "",
-    "SMS_URI": "",
-    "PHONE_ID": "",
-    "API_KEY": ""
-  }
-}`
+`{`
+  `"default": {`
+    `"DB_URL": "",`
+    `"STOCK_COUNT_DB": "",`
+    `"APP_CONFIG_DB": "",`
+    `"SMS_URI": "",`
+    `"PHONE_ID": "",`
+    `"API_KEY": "",`
+    `"REMINDER_DB": "sms_reminders"`
+  `}`
+`}`
 
 
 ## Usage
@@ -28,7 +29,8 @@ with following:
 1. `npm install -g grunt-cli`
 2. `git clone https://github.com/eHealthAfrica/lomis-reminder.git`
 3. `cd lomis-reminder && npm install;`
-4. `node index.js`
+4. `Create design docs inside couchdbviews on the database server`
+5. `node index.js`
 
 [Node.js]: http://nodejs.org
 [Git]: http://git-scm.com
