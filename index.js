@@ -18,9 +18,6 @@ function sendPendingReminders() {
         var today = new Date();
         var datePart = [today.getFullYear(), today.getMonth(), today.getDate()].join('-');
         var key = row.facilityId + datePart;
-        if(row.facilityId !== "5867a030f46eb1826dbeb3fe2001c184"){
-          return;
-        }
         reminder.getByKey(key)
           .then(function (res) {
             if (res.rows.length === 0) {
