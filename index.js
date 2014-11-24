@@ -16,8 +16,11 @@ function sendPendingReminders() {
           return;
         }
         var today = new Date();
-        var datePart = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toJSON();
+        var datePart = [today.getFullYear(), today.getMonth(), today.getDate()].join('-');
         var key = row.facilityId + datePart;
+        if(row.facilityId !== "5867a030f46eb1826dbeb3fe2001c184"){
+          return;
+        }
         reminder.getByKey(key)
           .then(function (res) {
             if (res.rows.length === 0) {
@@ -27,7 +30,6 @@ function sendPendingReminders() {
                   var doc = {
                     info: row,
                     type: 'stock_count',
-                    reminderDate: datePart,
                     sentOn: new Date().toJSON()
                   };
                   reminder.save(doc);
